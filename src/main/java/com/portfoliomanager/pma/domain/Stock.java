@@ -28,9 +28,9 @@ public class Stock {
 	public Stock(int id, String name, double pricePurchased, int quantityPurchased, String purchaseDate) {
 		super();
 		this.id = id;
-		name = name;
+		this.name = name;
 		this.pricePurchased = pricePurchased;
-		quantityPurchased = quantityPurchased;
+		this.quantityPurchased = quantityPurchased;
 		this.purchaseDate = purchaseDate;
 	}
 	
@@ -45,7 +45,7 @@ public class Stock {
 		return name;
 	}
 	public void setName(String name) {
-		name = name;
+		this.name = name;
 	}
 	public double getPricePurchased() {
 		return pricePurchased;
@@ -57,7 +57,7 @@ public class Stock {
 		return quantityPurchased;
 	}
 	public void setQuantityPurchased(int quantityPurchased) {
-		quantityPurchased = quantityPurchased;
+		this.quantityPurchased = quantityPurchased;
 	}
 	public String getPurchaseDate() {
 		return purchaseDate;

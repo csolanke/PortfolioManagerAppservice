@@ -44,7 +44,12 @@ public class StockService {
     public void deleteStock(int id) {
         repo.deleteById(id);
     }
-	
+    
+   public List<Stock> findStocksByName(String name)
+   {
+	return repo.findByName(name);
+	   
+   }	
 	
 	
 	

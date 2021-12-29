@@ -19,6 +19,8 @@ public class StockMapper {
 			stock.setPricePurchased(dto.getPricePurchased());
 			stock.setPurchaseDate(dto.getPurchaseDate());
 			stock.setQuantityPurchased(dto.getQuantityPurchased());
+			stock.setAmountInvested(dto.getAmountInvested());
+			stock.setCurrentValueOfInvestment(dto.getCurrentValueOfInvestment());
 			
 			return stock;
 		}
@@ -36,6 +38,8 @@ public class StockMapper {
 			dto.setPricePurchased(stock.getPricePurchased());
 			dto.setPurchaseDate(stock.getPurchaseDate());
 			dto.setQuantityPurchased(stock.getQuantityPurchased());
+			dto.setAmountInvested(stock.getAmountInvested());
+			dto.setCurrentValueOfInvestment(stock.getCurrentValueOfInvestment());
 			
 			return dto;
 		}

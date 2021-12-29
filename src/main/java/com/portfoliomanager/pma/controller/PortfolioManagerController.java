@@ -50,7 +50,13 @@ public StockDTO  fetchStockById(@PathVariable("id") int stockId) {
 @PostMapping("/stocks")
 public void  addStock(@RequestBody StockDTO stockDTO) {
 	
-    service.addStock(mapper.stockDTOToEntity(stockDTO));
+	
+	List<Stock> stockList =service.findStocksByName(stockDTO.getName());
+	if(stockList.isEmpty())
+	{
+		service.addStock(mapper.stockDTOToEntity(stockDTO));
+	}
+
     
 }
 

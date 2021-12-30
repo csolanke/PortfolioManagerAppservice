@@ -3,6 +3,7 @@ package com.portfoliomanager.pma.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -61,9 +62,20 @@ public void  addStock(@RequestBody StockDTO stockDTO) {
 }
 
 @PutMapping("/stocks/{id}")
-public void updateStock(@PathVariable("id") int stockId, @RequestBody StockDTO stockDto) {
+public ResponseEntity<Stock> updateStock(@PathVariable("id") int stockId, @RequestBody StockDTO stockDto) {
 	
-    service.updateStock(stockId, mapper.stockDTOToEntity(stockDto));
+	  Stock stock =service.getStock(stockId);
+	        stock.setName(stockDto.getName());
+	        stock.setPricePurchased(stockDto.getPricePurchased());
+	        stock.setPurchaseDate(stockDto.getPurchaseDate());
+	        stock.setQuantityPurchased(stockDto.getQuantityPurchased());
+	        stock.setAmountInvested(stockDto.getAmountInvested());
+	        stock.setCurrentValueOfInvestment(stockDto.getCurrentValueOfInvestment());
+	        
+	        service.addStock(stock);
+	
+	
+	return ResponseEntity.ok(stock);
 }
 
 

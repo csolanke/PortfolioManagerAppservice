@@ -27,7 +27,7 @@ public class StockService {
 	
 	public Stock getStock(int id)
 	{
-		return repo.findById(id).orElseGet(Stock::new);
+		return repo.findById(id).orElseThrow(()-> new ResourceNotFoundException("Stock with requested Id does not present"));
 	}
 	
 	public void addStock(Stock stock)

@@ -21,6 +21,7 @@ public class StockMapper {
 			stock.setQuantityPurchased(dto.getQuantityPurchased());
 			stock.setAmountInvested(dto.getAmountInvested());
 			stock.setCurrentValueOfInvestment(dto.getCurrentValueOfInvestment());
+			stock.setPurchaseStrategy(dto.getPurchaseStrategy());
 			
 			return stock;
 		}
@@ -40,6 +41,7 @@ public class StockMapper {
 			dto.setQuantityPurchased(stock.getQuantityPurchased());
 			dto.setAmountInvested(stock.getAmountInvested());
 			dto.setCurrentValueOfInvestment(stock.getCurrentValueOfInvestment());
+			dto.setPurchaseStrategy(stock.getPurchaseStrategy());
 			
 			return dto;
 		}

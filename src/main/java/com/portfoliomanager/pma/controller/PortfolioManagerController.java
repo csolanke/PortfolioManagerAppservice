@@ -71,6 +71,7 @@ public ResponseEntity<Stock> updateStock(@PathVariable("id") int stockId, @Reque
 	        stock.setQuantityPurchased(stockDto.getQuantityPurchased());
 	        stock.setAmountInvested(stockDto.getAmountInvested());
 	        stock.setCurrentValueOfInvestment(stockDto.getCurrentValueOfInvestment());
+	        stock.setPurchaseStrategy(stockDto.getPurchaseStrategy());
 	        
 	        service.addStock(stock);
 	

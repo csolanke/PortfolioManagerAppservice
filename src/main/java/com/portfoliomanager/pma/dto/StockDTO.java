@@ -10,6 +10,7 @@ private int id;
 	private String purchaseDate;
 	private double amountInvested;
 	private double currentValueOfInvestment;
+	private String purchaseStrategy;
 	
 	
 	
@@ -19,7 +20,8 @@ private int id;
 	}
 	public StockDTO(int id, String name, double pricePurchased, int quantityPurchased, String purchaseDate,
 			double amountInvested,
-			double currentValueOfInvestment) {
+			double currentValueOfInvestment,
+			String purchaseStrategy) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -28,6 +30,7 @@ private int id;
 		this.purchaseDate = purchaseDate;
 		this.amountInvested=amountInvested;
 		this.currentValueOfInvestment=currentValueOfInvestment;
+		this.purchaseStrategy=purchaseStrategy;
 	}
 	public int getId() {
 		return id;
@@ -70,6 +73,12 @@ private int id;
 	}
 	public void setCurrentValueOfInvestment(double currentValueOfInvestment) {
 		this.currentValueOfInvestment = currentValueOfInvestment;
+	}
+	public String getPurchaseStrategy() {
+		return purchaseStrategy;
+	}
+	public void setPurchaseStrategy(String purchaseStrategy) {
+		this.purchaseStrategy = purchaseStrategy;
 	}
 	
 	

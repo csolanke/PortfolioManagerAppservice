@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.portfoliomanager.pma.application.ResourceNotFoundException;
 import com.portfoliomanager.pma.domain.Stock;
 import com.portfoliomanager.pma.persistance.StockRepository;
 
@@ -27,7 +28,7 @@ public class StockService {
 	
 	public Stock getStock(int id)
 	{
-		return repo.findById(id).orElseThrow(()-> new ResourceNotFoundException("Stock with requested Id does not present"));
+		return repo.findById(id).orElseThrow(()-> new ResourceNotFoundException("Stock with requested Id does not exist"));
 	}
 	
 	public void addStock(Stock stock)

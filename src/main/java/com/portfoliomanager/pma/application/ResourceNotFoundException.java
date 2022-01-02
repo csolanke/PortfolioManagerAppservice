@@ -1,4 +1,4 @@
-package com.portfoliomanager.pma.service;
+package com.portfoliomanager.pma.application;
 
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.http.HttpStatus;

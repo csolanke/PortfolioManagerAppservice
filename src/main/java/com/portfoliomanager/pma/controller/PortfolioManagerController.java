@@ -3,6 +3,7 @@ package com.portfoliomanager.pma.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.portfoliomanager.pma.application.ResourceNotFoundException;
 import com.portfoliomanager.pma.domain.Stock;
 import com.portfoliomanager.pma.dto.StockDTO;
 import com.portfoliomanager.pma.mapper.StockMapper;
@@ -30,26 +32,41 @@ public class PortfolioManagerController {
 private StockService service;
 @Autowired
 private StockMapper mapper;
-	
+
 
 @GetMapping("/stocks")
- public List<Stock> fetchAllStocksFromHoldings()
+ public ResponseEntity<List<Stock>>  fetchAllStocksFromHoldings()
  {
-	return service.getAllStocks();
+	List<Stock> holdingList = service.getAllStocks();
+	
+	if(null!=holdingList)
+	{
+		return new ResponseEntity<>(holdingList, HttpStatus.OK);
+	}
+	return null;
+	
+
  }
 
 
 @GetMapping("/stocks/{id}")
-public StockDTO  fetchStockById(@PathVariable("id") int stockId) {
-	 Stock stockEntity = service.getStock(stockId);
-	 
- return mapper.stockEntityToDTO(stockEntity);
+public ResponseEntity<Stock> fetchStockById(@PathVariable("id") int stockId) {
+
+	   Stock stock = service.getStock(stockId);
+	   if(null!= stock)
+	   {
+		   return new ResponseEntity<>(stock,HttpStatus.OK); 
+	   }
+	   else{
+		   
+		   throw new ResourceNotFoundException("Stock with requested Id does not exist");
+	   }
 	 
 }
 
 
 @PostMapping("/stocks")
-public void  addStock(@RequestBody StockDTO stockDTO) {
+public ResponseEntity<Stock>  addStock(@RequestBody StockDTO stockDTO) {
 	
 	
 	List<Stock> stockList =service.findStocksByName(stockDTO.getName());
@@ -58,6 +75,7 @@ public void  addStock(@RequestBody StockDTO stockDTO) {
 		service.addStock(mapper.stockDTOToEntity(stockDTO));
 	}
 
+	return new ResponseEntity<>(HttpStatus.OK);
     
 }
 
@@ -81,9 +99,11 @@ public ResponseEntity<Stock> updateStock(@PathVariable("id") int stockId, @Reque
 
 
 @DeleteMapping("/stocks/{id}")
-public void deleteStockById(@PathVariable("id") int stockId)
+public ResponseEntity<Stock>  deleteStockById(@PathVariable("id") int stockId)
 {
     service.deleteStock(stockId);	
+    
+    return new ResponseEntity<>(HttpStatus.OK);
 }
 
 

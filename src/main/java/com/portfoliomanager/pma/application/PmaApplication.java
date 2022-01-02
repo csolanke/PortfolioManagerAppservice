@@ -7,7 +7,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
-@ComponentScan(basePackages = { "com.portfoliomanager.pma.controller", "com.portfoliomanager.pma.service",
+@ComponentScan(basePackages = { "com.portfoliomanager.pma.domain.exception","com.portfoliomanager.pma.controller", "com.portfoliomanager.pma.service",
 		"com.portfoliomanager.pma.mapper", "com.portfoliomanager.pma.dto" })
 @EnableJpaRepositories(basePackages = { "com.portfoliomanager.pma.persistance" })
 @EntityScan("com.portfoliomanager.pma.domain")

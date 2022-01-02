@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.portfoliomanager.pma.application.ResourceNotFoundException;
 import com.portfoliomanager.pma.domain.Stock;
 import com.portfoliomanager.pma.dto.StockDTO;
 import com.portfoliomanager.pma.mapper.StockMapper;
@@ -37,50 +36,37 @@ private StockMapper mapper;
 @GetMapping("/stocks")
  public ResponseEntity<List<Stock>>  fetchAllStocksFromHoldings()
  {
-	List<Stock> holdingList = service.getAllStocks();
-	
-	if(null!=holdingList)
-	{
+	     List<Stock> holdingList = service.getAllStocks();
 		return new ResponseEntity<>(holdingList, HttpStatus.OK);
-	}
-	return null;
-	
-
  }
 
 
 @GetMapping("/stocks/{id}")
-public ResponseEntity<Stock> fetchStockById(@PathVariable("id") int stockId) {
+public ResponseEntity<StockDTO> fetchStockById(@PathVariable("id") int stockId) {
 
-	   Stock stock = service.getStock(stockId);
-	   if(null!= stock)
-	   {
-		   return new ResponseEntity<>(stock,HttpStatus.OK); 
-	   }
-	   else{
-		   
-		   throw new ResourceNotFoundException("Stock with requested Id does not exist");
-	   }
-	 
+	Stock stock = service.getStock(stockId);
+	
+	StockDTO dto = mapper.stockEntityToDTO(stock);
+    return new ResponseEntity<>(dto,HttpStatus.OK); 
+	  
 }
 
 
 @PostMapping("/stocks")
-public ResponseEntity<Stock>  addStock(@RequestBody StockDTO stockDTO) {
+public ResponseEntity<StockDTO>  addStock(@RequestBody StockDTO stockDTO) {
 	
 	
-	List<Stock> stockList =service.findStocksByName(stockDTO.getName());
-	if(stockList.isEmpty())
-	{
-		service.addStock(mapper.stockDTOToEntity(stockDTO));
-	}
+       Stock stock =mapper.stockDTOToEntity(stockDTO);
+       Stock savedstock = service.addStock(stock);
+       
+       StockDTO dto = mapper.stockEntityToDTO(savedstock);
 
-	return new ResponseEntity<>(HttpStatus.OK);
+	return new ResponseEntity<>(dto,HttpStatus.CREATED);
     
 }
 
 @PutMapping("/stocks/{id}")
-public ResponseEntity<Stock> updateStock(@PathVariable("id") int stockId, @RequestBody StockDTO stockDto) {
+public ResponseEntity<StockDTO> updateStock(@PathVariable("id") int stockId, @RequestBody StockDTO stockDto) {
 	
 	  Stock stock =service.getStock(stockId);
 	        stock.setName(stockDto.getName());
@@ -91,22 +77,23 @@ public ResponseEntity<Stock> updateStock(@PathVariable("id") int stockId, @Reque
 	        stock.setCurrentValueOfInvestment(stockDto.getCurrentValueOfInvestment());
 	        stock.setPurchaseStrategy(stockDto.getPurchaseStrategy());
 	        
-	        service.addStock(stock);
+	        service.updateStock(stockId, stock);
+	        
+	       StockDTO dto = mapper.stockEntityToDTO(stock);
+	        
+	        
 	
 	
-	return ResponseEntity.ok(stock);
+	return ResponseEntity.ok(dto);
 }
 
 
 @DeleteMapping("/stocks/{id}")
-public ResponseEntity<Stock>  deleteStockById(@PathVariable("id") int stockId)
+public ResponseEntity<?>  deleteStockById(@PathVariable("id") int stockId)
 {
     service.deleteStock(stockId);	
     
     return new ResponseEntity<>(HttpStatus.OK);
 }
-
-
-
 
 }

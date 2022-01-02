@@ -4,9 +4,10 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.portfoliomanager.pma.application.ResourceNotFoundException;
 import com.portfoliomanager.pma.domain.Stock;
 import com.portfoliomanager.pma.persistance.StockRepository;
+import com.portfoliomanager.pma.domain.exception.ResourceExistException;
+import com.portfoliomanager.pma.domain.exception.ResourceNotFoundException;
 
 @Service
 public class StockService {
@@ -28,12 +29,20 @@ public class StockService {
 	
 	public Stock getStock(int id)
 	{
-		return repo.findById(id).orElseThrow(()-> new ResourceNotFoundException("Stock with requested Id does not exist"));
+		return repo.findById(id).orElseThrow(()-> new ResourceNotFoundException("Stock with requested Id:"+id+" does not exist"));
 	}
 	
-	public void addStock(Stock stock)
+	public Stock addStock(Stock stock)
 	{
-		repo.save(stock);
+		List<Stock> stockList =repo.findByName(stock.getName());
+		if(stockList.isEmpty()) {
+			repo.save(stock);
+		}
+		else {
+			throw new ResourceExistException("Stock alreday exist in holding list");
+		}
+		
+		return stock;
 	
 	}
 	

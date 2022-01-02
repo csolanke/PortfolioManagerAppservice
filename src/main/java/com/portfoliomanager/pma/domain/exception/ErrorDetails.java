@@ -1,4 +1,4 @@
-package com.portfoliomanager.pma.application;
+package com.portfoliomanager.pma.domain.exception;
 
 import java.util.Date;
 

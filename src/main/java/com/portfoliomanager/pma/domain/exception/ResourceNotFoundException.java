@@ -1,4 +1,4 @@
-package com.portfoliomanager.pma.application;
+package com.portfoliomanager.pma.domain.exception;
 
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.http.HttpStatus;
@@ -7,6 +7,10 @@ import org.springframework.http.HttpStatus;
 public class ResourceNotFoundException extends RuntimeException{
 	
 	private static final long serialVersionUID =1L;
+	
+	public ResourceNotFoundException() {
+		super();
+	}
 
 	public ResourceNotFoundException(String messsage) {
 		
